@@ -1,2 +1,2 @@
-# bayhacks_team15
-Repo for BayHacks hackathon app - alphabet scoring
+# Hindi-Handwritten-Ai
+Using CNN to learn HIndi letters(for new learners)
