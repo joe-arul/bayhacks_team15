@@ -12,22 +12,24 @@ import numpy as np
 import sys 
 #for reading operating system data
 import os
-from keras.models import load_model
-import tensorflow as tf
+#from keras.models import load_model
+#import tensorflow as tf
 from PIL import Image
 import imutils
 from letters import send_json
 from io import BytesIO
 import base64
-import io
-model = tf.keras.models.load_model('./model')
+import tensorflow as tf
+
+
+model = tf.keras.models.load_model('./model2.h5')
 def stringToImage(base64_string):
     # img_color = cv2.cvtColor(np.array(Image.open(io.BytesIO(base64.b64decode(base64_string)))), cv2.COLOR_BGR2RGB)
     # cv2.imwrite('output.png',img_color)
-    print('#'*60)
+    # print('#'*60)
     s = base64_string.decode('utf-8')
     s = s.split(',')[1]
-    print(base64_string)
+    # print(base64_string)
     im = Image.open(BytesIO(base64.b64decode(s)))
     im.save("output.png")
     # print(type(base64_string))
@@ -61,7 +63,21 @@ def convertImage(imgData1):
 app = Flask(__name__)
 
 @app.route('/')
-def index():
+def home():
+	#initModel()
+	#render out pre-built HTML file right on the index page
+    return render_template("landing.html")
+@app.route('/learn')
+def learn():
+    letters = send_json()
+	#initModel()
+	#render out pre-built HTML file right on the index page
+    return render_template("index.html",letters=letters)
+
+
+
+@app.route('/test')
+def tes():
 	#initModel()
 	#render out pre-built HTML file right on the index page
     letters = send_json()
@@ -69,6 +85,10 @@ def index():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
+    #
+    labelNames = "abcdefghijklmnopqrstuvwxyz"
+    letters = send_json()
+    letters = {int(i):j for i,j in letters.items()}
     #whenever the predict method is called, we're going
     #to input the user drawn character as an image into the model
     #perform inference, and return the classification
@@ -76,6 +96,7 @@ def predict():
     imgData = request.get_data()
     stringToImage(imgData)
     x = cv2.imread('output.png')
+    
     #print(imgData)
     #encode it into a suitable format
     #convertImage(imgData)
@@ -88,24 +109,35 @@ def predict():
 
     #compute a bit-wise inversion so black becomes white and vice versa
     
-    x = np.invert(x)
-    cv2.imwrite('trial.png',x)
+    #x = np.invert(x)
+    #cv2.imwrite('trial.png',x)
     #make it the right size
     #x = np.expand_dims(x,axis=-1)
-    x = cv2.resize(x,(32,32))
+    x = cv2.resize(x,(100,100))
+    x = x >= 180
+    x = x.astype("int16") * 255
+    #x = cv2.merge([x,x,x])
+    x = x.astype("float32") / 255.0
+    x = np.expand_dims(x,axis=-1)
+    cv2.imwrite('imge.png', x)
+    #x = cv2.cvtColor(x, cv2.COLOR_GRAY2BGR)
+    
     print(x.shape)
-    x = x[:,:,0]
+   # x = x[:,:,0]
     
     #x = x.reshape(x.shape[0],3,32,32)
-    x = x.reshape(1, 32, 32,1).astype('float32')
+    x = x.reshape(1, 100, 100, 3).astype('float32')
     #x  = x/255
     
     out = model.predict(x)
-    print(np.argsort(out))
-    prediction = np.argmax(out,axis=1)
-    print(prediction)
-    letters = send_json()
-    return str(prediction[0])
+    prediction = np.argmax(out)
+    preds = [labelNames[i] for i in np.argsort(out)[0][-3:]]
+    print(preds)
+    print(labelNames[prediction])
+
+    # letters = send_json()
+    return 'A'
+    # return str(prediction[0])
 
 #new_func()
 
