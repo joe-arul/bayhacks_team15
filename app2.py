@@ -86,7 +86,11 @@ def tes():
 @app.route('/predict',methods=['GET','POST'])
 def predict():
     #
+<<<<<<< HEAD
     labelNames = "abcdefghijklmnopqrstuvwxyz".upper()
+=======
+    labelNames = "abcdefghijklmnopqrstuvwxyz"
+>>>>>>> 794200de3110cf51761ad6e4c36d91eb6d271b50
     letters = send_json()
     letters = {int(i):j for i,j in letters.items()}
     #whenever the predict method is called, we're going
@@ -133,10 +137,17 @@ def predict():
     prediction = np.argmax(out)
     preds = [labelNames[i] for i in np.argsort(out)[0][-3:]]
     print(preds)
+<<<<<<< HEAD
     print(labelNames[prediction],out[0][-1])
 
     # letters = send_json()
     return labelNames[prediction]
+=======
+    print(labelNames[prediction])
+
+    # letters = send_json()
+    return 'A'
+>>>>>>> 794200de3110cf51761ad6e4c36d91eb6d271b50
     # return str(prediction[0])
 
 #new_func()

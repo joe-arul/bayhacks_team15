@@ -14,6 +14,7 @@ const data = {
   labels: labels,
   datasets: [
     {
+<<<<<<< HEAD
       label: "Top Perfomer - Leo",
       backgroundColor: "rgb(255, 99, 132)",
       borderColor: "rgb(255, 99, 132)",
@@ -21,6 +22,15 @@ const data = {
     },
     {
       label: "You",
+=======
+      label: "letter a",
+      backgroundColor: "rgb(255, 99, 132)",
+      borderColor: "rgb(255, 99, 132)",
+      data: [0, 10, 5, 2, 20, 30, 45],
+    },
+    {
+      label: "letter d",
+>>>>>>> 794200de3110cf51761ad6e4c36d91eb6d271b50
       backgroundColor: "rgb(54, 162, 235)",
       borderColor: "rgb(54, 162, 235)",
       data: [15, 25, 10, 12, 30, 40, 55],
