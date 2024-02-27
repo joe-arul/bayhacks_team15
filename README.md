@@ -1,5 +1,14 @@
 # BayHacks 2024 - Graphien Project
 
+## 🏆 BayHacks 2024 Winners 🏆
+
+![BayHacks Logo](img-readme/Bayhacks2024.jpeg)
+
+
+We're thrilled to announce that Graphien was the winning project at BayHacks 2024! A huge thank you to everyone who supported us and 
+believed in our vision of making learning to write fun and accessible to all.
+
+
 ## Team Graphien
 - Suraj
 - Joe
