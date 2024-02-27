@@ -1,2 +1,4 @@
-# Hindi-Handwritten-Ai
-Using CNN to learn HIndi letters(for new learners)
+# Graphien
+##### The duo-lingo for learning how to write
+
+
